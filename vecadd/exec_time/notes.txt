@@ -1,0 +1,6 @@
+overhead of 
+	CUDA_CHECK_RETURN(cudaThreadSynchronize());	
+= 50ms
+
+	CUDA_CHECK_RETURN(cudaGetLastError());
+= 10ms
