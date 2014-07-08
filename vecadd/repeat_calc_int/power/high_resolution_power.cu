@@ -7,8 +7,8 @@
 
 #include "high_resolution_power.h"
 
-int sleep_time_after_kernel_call = 25; //s
-int reps = 30; //getenv
+int sleep_time_after_kernel_call = 30; //s
+int reps = 2; //getenv
 unsigned int device_id = 0;
 long long time_kernel_start_ex = 0;
 

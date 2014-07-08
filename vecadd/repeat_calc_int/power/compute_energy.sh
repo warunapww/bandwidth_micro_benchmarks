@@ -44,25 +44,12 @@ do
   F_COMPARE_1=`echo $T_CURR'>'$EXEC_TIME | bc -l`
   F_COMPARE_2=`echo $T_CURR'<0' | bc -l`
  
-  #if [ $F_COMPARE_1 -eq 1 -o $F_COMPARE_2 -eq 1 ]
-  if [ $F_COMPARE_2 -eq 1 ]
+  if [ $F_COMPARE_1 -eq 1 -o $F_COMPARE_2 -eq 1 ]
   then
-    #T_CURR is less than 0
+###    T_CURR=$T_PREV
+    #echo "T_CURR out of bounds"
+#    exit
     continue
-  fi
-  if [ $F_COMPARE_1 -eq 1 ]
-  then
-    #T_CURR is greater than EXEC_TIME
-    if [ $COUNT -gt 0 ]
-    then
-  #    echo "COUNT > 0"
-      #Just passed the EXEC_TIME. Therefore calculate the power at execution time.
-      COUNT=-1
-      P_CURR=`bc -l <<< "${P_CURR}-(${T_CURR}*(${P_CURR}-${P_PREV})/(${T_CURR}-(${T_PREV})))"`
-      T_CURR=${EXEC_TIME};
-    else  
-      continue
-    fi
   fi
 
 #  echo "POWER: $P_CURR"
@@ -88,3 +75,4 @@ echo "$ENERGY"
 echo "ENERGY: $ENERGY">>${LOG}
 
 date>>${LOG}
+

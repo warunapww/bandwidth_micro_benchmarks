@@ -22,12 +22,12 @@
 
 
 // Variables for host and device vectors.
-float* h_A; 
-float* h_B; 
-float* h_C; 
-float* d_A; 
-float* d_B; 
-float* d_C; 
+int* h_A; 
+int* h_B; 
+int* h_C; 
+int* d_A; 
+int* d_B; 
+int* d_C; 
 int ValuesPerThread; // number of values per thread
 
 // Utility Functions
@@ -60,18 +60,18 @@ int main(int argc, char** argv)
     N = ValuesPerThread * GridWidth * BlockWidth;
     printf("Total vector size: %d\n", N); 
     // size_t is the total number of bytes for a vector.
-    size_t size = N * sizeof(float);
+    size_t size = N * sizeof(int);
 
     // Tell CUDA how big to make the grid and thread blocks.
     // Since this is a vector addition problem,
     // grid and thread block are both one-dimensional.
 
     // Allocate input vectors h_A and h_B in host memory
-    h_A = (float*)malloc(size);
+    h_A = (int*)malloc(size);
     if (h_A == 0) Cleanup(false);
-    h_B = (float*)malloc(size);
+    h_B = (int*)malloc(size);
     if (h_B == 0) Cleanup(false);
-    h_C = (float*)malloc(size);
+    h_C = (int*)malloc(size);
     if (h_C == 0) Cleanup(false);
 
     // Allocate vectors in device memory.
@@ -86,9 +86,9 @@ int main(int argc, char** argv)
     // Initialize host vectors h_A and h_B
     int i;
     for(i=0; i<N; ++i){
-     h_A[i] = (float)i;
-     h_B[i] = (float)(N-i);   
-	 h_C[i] = (float)0.0;
+     h_A[i] = (int)i;
+     h_B[i] = (int)(N-i);   
+	 h_C[i] = (int)0.0;
     }
 
     // Copy host vectors h_A and h_B to device vectores d_A and d_B
@@ -126,7 +126,7 @@ int main(int argc, char** argv)
     //high_resolution_power_profile(call_gpu_function);
 
 
-	// Compute floating point operations per second.
+	// Compute inting point operations per second.
     double nFlops = (double)N*(double)REPS ;
     double nFlopsPerSec = 1e3*nFlops/time;
     double nGFlopsPerSec = nFlopsPerSec*1e-9;
@@ -141,7 +141,7 @@ int main(int argc, char** argv)
     //double nGBytesPerSec = 1e3*nBytes/exec_time_nanoseconds;
 
 	// Report timing data.
-    printf( "%d %d %d Time: %f (ms), GFlopsS: %f GBytesS: %f nytes: %f nBytesPerS: %f\n", GridWidth, BlockWidth, ValuesPerThread,
+    printf( "%d %d %d Time: %f (ms), GOPS: %f GBytesS: %f nytes: %f nBytesPerS: %f\n", GridWidth, BlockWidth, ValuesPerThread,
              time, nGFlopsPerSec, nGBytesPerSec, nBytes, nBytesPerSec);
      
     // Copy result from device memory to host memory
@@ -150,7 +150,7 @@ int main(int argc, char** argv)
 
     // Verify & report result
     for (i = 0; i < N; ++i) {
-        float val = h_C[i];
+        int val = h_C[i];
         if (fabs(val - N) > 1e-5)
             break;
     }
