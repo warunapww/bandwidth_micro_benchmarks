@@ -16,18 +16,18 @@
 
 // Includes
 #include <stdio.h>
-#include "pp_dynamic_access_offchip_memory_vecadd_repeat.h"
+#include "pp_dynamic_access_offchip_memory_char_vecadd_repeat.h"
 
 #include "high_resolution_power.h"
 
 
 // Variables for host and device vectors.
-float* h_A; 
-float* h_B; 
-float* h_C; 
-float* d_A; 
-float* d_B; 
-float* d_C; 
+char* h_A; 
+char* h_B; 
+char* h_C; 
+char* d_A; 
+char* d_B; 
+char* d_C; 
 int ValuesPerThread; // number of values per thread
 
 // Utility Functions
@@ -60,18 +60,18 @@ int main(int argc, char** argv)
     N = ValuesPerThread * GridWidth * BlockWidth;
     printf("Total vector size: %d\n", N); 
     // size_t is the total number of bytes for a vector.
-    size_t size = N * sizeof(float);
+    size_t size = N * sizeof(char);
 
     // Tell CUDA how big to make the grid and thread blocks.
     // Since this is a vector addition problem,
     // grid and thread block are both one-dimensional.
 
     // Allocate input vectors h_A and h_B in host memory
-    h_A = (float*)malloc(size);
+    h_A = (char*)malloc(size);
     if (h_A == 0) Cleanup(false);
-    h_B = (float*)malloc(size);
+    h_B = (char*)malloc(size);
     if (h_B == 0) Cleanup(false);
-    h_C = (float*)malloc(size);
+    h_C = (char*)malloc(size);
     if (h_C == 0) Cleanup(false);
 
     // Allocate vectors in device memory.
@@ -86,9 +86,9 @@ int main(int argc, char** argv)
     // Initialize host vectors h_A and h_B
     int i;
     for(i=0; i<N; ++i){
-     h_A[i] = (float)i;
-     h_B[i] = (float)(N-i);   
-	 h_C[i] = (float)0.0;
+     h_A[i] = (char)i;
+     h_B[i] = (char)(N-i);   
+	 h_C[i] = (char)0.0;
     }
 
     // Copy host vectors h_A and h_B to device vectores d_A and d_B
@@ -118,15 +118,12 @@ int main(int argc, char** argv)
 
     long long exec_time_nanoseconds = get_exec_time_in_nanoseconds(call_gpu_function); 
     
-    //high_resolution_power_profile(call_gpu_function);
+    high_resolution_power_profile(call_gpu_function);
 
 
     double time = exec_time_nanoseconds/1e6; //in ms
 
-    //high_resolution_power_profile(call_gpu_function);
-
-
-	// Compute floating point operations per second.
+	// Compute charing point operations per second.
     double nFlops = (double)N*(double)REPS ;
     double nFlopsPerSec = 1e3*nFlops/time;
     double nGFlopsPerSec = nFlopsPerSec*1e-9;
@@ -141,7 +138,7 @@ int main(int argc, char** argv)
     //double nGBytesPerSec = 1e3*nBytes/exec_time_nanoseconds;
 
 	// Report timing data.
-    printf( "%d %d %d Time: %f (ms), GFlopsS: %f GBytesS: %f nytes: %f nBytesPerS: %f\n", GridWidth, BlockWidth, ValuesPerThread,
+    printf( "GridWidth: %d BlockWidth: %d ValuesPerThread: %d REPS: %d Time: %f (ms), GFlopsS: %f GBytesS: %f nytes: %f nBytesPerS: %f\n", GridWidth, BlockWidth, ValuesPerThread, REPS,
              time, nGFlopsPerSec, nGBytesPerSec, nBytes, nBytesPerSec);
      
     // Copy result from device memory to host memory
@@ -150,7 +147,7 @@ int main(int argc, char** argv)
 
     // Verify & report result
     for (i = 0; i < N; ++i) {
-        float val = h_C[i];
+        char val = h_C[i];
         if (fabs(val - N) > 1e-5)
             break;
     }

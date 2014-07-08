@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LOG=run_process_logs.log
-LOG_PREFIX=pp_dynamic_access_offchip_memory_vecadd_repeat_
+LOG_PREFIX=pp_dynamic_access_offchip_memory_char_vecadd_repeat_
 
 ENERGY_LOG=${LOG_PREFIX}_ENERGY.log
 

@@ -1,6 +1,6 @@
-#include "pp_dynamic_access_offchip_memory_vecadd_repeat.h"
+#include "pp_dynamic_access_offchip_memory_char_vecadd_repeat.h"
 
-__global__ void AddVectors(const float* A, const float* B, float* C, int N)
+__global__ void AddVectors(const char* A, const char* B, char* C, int N)
 {
   int blockStartIndex  = blockIdx.x * blockDim.x * N;
   int threadStartIndex = blockStartIndex + threadIdx.x;
