@@ -8,10 +8,10 @@ export NVML_SLEEP_TIME=25
 
 CONFIG_FILE=configs.info
 
-FILE_NAME="pp_dynamic_access_offchip_memory_vecadd_repeat.h"
+FILE_NAME="pp_dynamic_access_offchip_memory_int_vecadd_repeat.h"
 
-EXE_NAME=pp_dynamic_access_offchip_memory
-LOG_PREFIX=pp_dynamic_access_offchip_memory_vecadd_repeat_
+EXE_NAME=pp_dynamic_access_offchip_memory_int
+LOG_PREFIX=pp_dynamic_access_offchip_memory_int_vecadd_repeat_
 
 LOG=${LOG_PREFIX}.run.log
 

@@ -19,6 +19,8 @@ pp_dynamic_access_offchip_memory_int_vecadd_repeat_kernel.o:	pp_dynamic_access_o
 	$(CC) $< ${OPTIONS} -c -o $@
 
 #-------------------------------------------------------
+ptx:	 pp_dynamic_access_offchip_memory_int_vecadd_repeat_kernel.cu pp_dynamic_access_offchip_memory_int_vecadd_repeat.h
+	$(CC) -ptx ${OPTIONS} pp_dynamic_access_offchip_memory_int_vecadd_repeat_kernel.cu
 
 clean: 
 	rm -f *.o ${EXES}
