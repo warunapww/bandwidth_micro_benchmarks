@@ -6,7 +6,7 @@
 #define GridWidth 208
 #define BlockWidth 1024
 
-#define REPS 1000
+#define REPS 46
 
 __global__ void AddVectors(const int* A, const int* B, int* C, int N);
 
