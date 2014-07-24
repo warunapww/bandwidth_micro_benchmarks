@@ -1,0 +1,10 @@
+nvcc pp_dynamic_access_offchip_memory_vecadd_repeat_kernel.cu -O3 -Xptxas -v -arch=sm_35 -c -o pp_dynamic_access_offchip_memory_vecadd_repeat_kernel.o
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z10AddVectorsPKfS0_Pfi' for 'sm_35'
+ptxas info    : Function properties for _Z10AddVectorsPKfS0_Pfi
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 24 registers, 16384 bytes smem, 348 bytes cmem[0]
+nvcc high_resolution_power.cu -O3 -Xptxas -v -arch=sm_35 -c -o high_resolution_power.o
+ptxas info    : 0 bytes gmem
+nvcc pp_dynamic_access_offchip_memory_vecadd_repeat.cu high_resolution_power.o pp_dynamic_access_offchip_memory_vecadd_repeat_kernel.o -L/s/chopin/e/proj/AlphaZ/waruna/lib -L/s/chopin/e/proj/AlphaZ/waruna/papi/installation/5.3.0/lib -lnvidia-ml -lpapi -O3 -Xptxas -v -arch=sm_35 -o pp_dynamic_access_offchip_memory
+ptxas info    : 0 bytes gmem

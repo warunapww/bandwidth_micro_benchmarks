@@ -1,0 +1,16 @@
+
+#ifndef __pp_dynamic_access_offchip_memory_vecadd_h__
+#define __pp_dynamic_access_offchip_memory_vecadd_h__
+
+// Defines
+#define GRID_WIDTH __GRID_WIDTH__
+#define BLOCK_WIDTH __BLOCK_WIDTH__
+
+#define REPS __REPS__
+#define VALUES_PER_THREAD __VALUES_PER_THREAD__
+#define SHARED_ARRAY_SIZE __SHARED_ARRAY_SIZE__
+
+__global__ void AddVectors(const float* A, const float* B, float* C, int N);
+
+
+#endif //__pp_dynamic_access_offchip_memory_vecadd_h__
